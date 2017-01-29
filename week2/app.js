@@ -1,8 +1,6 @@
 (function () {
 'use strict';
 
-// Since the service is required to be created as a .service,
-//it is a Singleton and cannot be configured
 angular.module('ShoppingListCheckOff', [])
       .controller('ToBuyController', ToBuyController)
       .controller('AlreadyBoughtController', AlreadyBoughtController)
@@ -13,9 +11,6 @@ angular.module('ShoppingListCheckOff', [])
 
     var showListToBuy = this;
 
-    console.log("in ToBuyController", showListToBuy);
-
-    //Requirement: toBuy list should be pre-populated with 5 items
     ShoppingListCheckOffService.addItemToBuy("cookies", "10");
     ShoppingListCheckOffService.addItemToBuy("cookies", "10");
     ShoppingListCheckOffService.addItemToBuy("cookies", "10");
@@ -24,29 +19,25 @@ angular.module('ShoppingListCheckOff', [])
     ShoppingListCheckOffService.addItemToBuy("cookies", "10");
 
     showListToBuy.items = ShoppingListCheckOffService.getItemsToBuy();
-    console.log("in ToBuyController", showListToBuy.items);
+
+    showListToBuy.buyItem = function (index) {
+      ShoppingListCheckOffService.addItemToBought(showListToBuy.items[index]);
+      showListToBuy.items.splice(index, 1);
+    }
   }
 
   AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
   function AlreadyBoughtController(ShoppingListCheckOffService) {
 
     var buys = this;
-    console.log("in AlreadyBoughtController ");
-
-    ShoppingListCheckOffService.addItemToBought("cookies", "10");
-    console.log("in AlreadyBoughtController; added item ");
 
     buys.items = ShoppingListCheckOffService.getBoughtItems();
-    console.log("in AlreadyBoughtController; items", buys.items);
 
   }
 
   function ShoppingListCheckOffService() {
     var service = this;
 
-    console.log("in service");
-
-    //Requirement: initally empty
     var boughtItems = [];
     var toBuyItems = [];
 
@@ -58,11 +49,7 @@ angular.module('ShoppingListCheckOff', [])
       toBuyItems.push(item);
     };
 
-    service.addItemToBought = function (itemName, quantity) {
-      var item = {
-        name: itemName,
-        quantity: quantity
-      };
+    service.addItemToBought = function (item) {
       boughtItems.push(item);
     };
 
