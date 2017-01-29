@@ -3,10 +3,9 @@
   <head>
     <title>Shopping List Check Off</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
-
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
     <style>
       .emptyMessage {
         font-weight: bold;
@@ -25,35 +24,37 @@
       }
     </style>
   </head>
-<body ng-app="ShoppingListCheckOff">
+<body  ng-app="ShoppingListCheckOff">
   <div class="container">
   <h1>Shopping List Check Off</h1>
 
   <div class="row">
 
     <!-- To Buy List -->
-    <div class="col-md-6" ng-contoller='ToBuyController as showListToBuy'>
-     <h2>To Buy:</h2>
-     <ul>
-       <li nq-repeat="item in showListToBuy.items">
-         Buy
-         {{ item.quantity }} of {{ item.name }}
-         <!-- <button class="btn btn-default"> Bought</button>-->
-         <span class="glyphicon glyphicon-ok"></span>
-       </li>
-     </ul>
-       <!-- <div class="emptyMessage">Everything is bought!</div> -->
+    <div class="col-md-6" ng-controller='ToBuyController as showListToBuy'>
+       <h2>To Buy:</h2>
+       <ul>
+         <!-- <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+         <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li> -->
+
+          <li ng-repeat="item in showListToBuy.items">
+            {{ item.quantity }} of {{ item.name }}
+            <button ng-click="showList.removeItem($index);"><span class="glyphicon glyphicon-ok"></span> Bought</button>
+          </li>
+
+       </ul>
+       <div class="emptyMessage">Everything is bought!</div>
     </div>
 
-    <!-- Already Bought List -->
+        <!-- Already Bought List -->
     <div class="col-md-6" ng-controller = 'AlreadyBoughtController as buys'>
-     <h2>Already Bought:</h2>
-     <ul>
-       <li ng-repeat="item in buys.items">
-         Bought {{ item.quantity }} of  {{ item.name }}
-       </li>
-     </ul>
-     <div class="emptyMessage">Nothing bought yet.</div>
+      <h2>Already Bought:</h2>
+      <ul>
+         <li ng-repeat="item in buys.items">
+           Bought {{ item.quantity }} of  {{ item.name }}
+         </li>
+      </ul>
+      <div class="emptyMessage">Nothing bought yet.</div>
     </div>
   </div>
 </div>

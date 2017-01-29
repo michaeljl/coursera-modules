@@ -10,25 +10,26 @@ angular.module('ShoppingListCheckOff', [])
 
   ToBuyController.$inject = ['ShoppingListCheckOffService'];
   function ToBuyController(ShoppingListCheckOffService) {
-    console.log("in ToBuyController");
 
     var showListToBuy = this;
 
-    console.log("in ToBuyController");
-//Requirement: toBuy list should be pre-populated with 5 items
+    console.log("in ToBuyController", showListToBuy);
 
-    // ShoppingListCheckOffService.addItemToBuy("cookies", "10");
-    // ShoppingListCheckOffService.addItemToBuy("cookies", "10");
-    // ShoppingListCheckOffService.addItemToBuy("cookies", "10");
-    // ShoppingListCheckOffService.addItemToBuy("cookies", "10");
-    // ShoppingListCheckOffService.addItemToBuy("cookies", "10");
-    // ShoppingListCheckOffService.addItemToBuy("cookies", "10");
+    //Requirement: toBuy list should be pre-populated with 5 items
+    ShoppingListCheckOffService.addItemToBuy("cookies", "10");
+    ShoppingListCheckOffService.addItemToBuy("cookies", "10");
+    ShoppingListCheckOffService.addItemToBuy("cookies", "10");
+    ShoppingListCheckOffService.addItemToBuy("cookies", "10");
+    ShoppingListCheckOffService.addItemToBuy("cookies", "10");
+    ShoppingListCheckOffService.addItemToBuy("cookies", "10");
 
     showListToBuy.items = ShoppingListCheckOffService.getItemsToBuy();
+    console.log("in ToBuyController", showListToBuy.items);
   }
 
   AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
   function AlreadyBoughtController(ShoppingListCheckOffService) {
+
     var buys = this;
     console.log("in AlreadyBoughtController ");
 
@@ -36,7 +37,7 @@ angular.module('ShoppingListCheckOff', [])
     console.log("in AlreadyBoughtController; added item ");
 
     buys.items = ShoppingListCheckOffService.getBoughtItems();
-    console.log("in AlreadyBoughtController; finished");
+    console.log("in AlreadyBoughtController; items", buys.items);
 
   }
 
@@ -62,7 +63,7 @@ angular.module('ShoppingListCheckOff', [])
         name: itemName,
         quantity: quantity
       };
-      toBuyItems.push(item);
+      boughtItems.push(item);
     };
 
 
