@@ -29,11 +29,19 @@
 
     return ddo;
   }
+}
 
   MenuSearchService.$inject = ['$http', 'ApiBasePath'];
-  function MenuSearchService() {
-    var service = this;
+function MenuSearchService() {
+  var service = this;
 
+  service.getMatchedMenuItems(searchTerm) {
+    function () {
+    var response = $http({
+      method: "LIST",
+      url: (ApiBasePath + "/categories.json"),
+      params: searchTerm
+    });
 
     service.getMatchedMenuItems = function (searchTerm) {
       return $http(
