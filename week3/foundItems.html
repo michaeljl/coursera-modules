@@ -1,6 +1,7 @@
+
 <ul>
-        <li>
-          {{ item.description  }}
-            <button class="btn btn-primary" ng-click="items.remove($index)" >remove item</button>
-        </li>
+  <li ng-repeat="item in list.found">
+      <span> {{ item.description }} </span>
+      <!-- <button ng-click="items.remove($index);">Remove Item</button> -->
+  </li>
 </ul>
