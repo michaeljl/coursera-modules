@@ -7,27 +7,37 @@
   .controller('NarrowItDownController', NarrowItDownController)
   .service('MenuSearchService', MenuSearchService)
   .constant('ApiBasePath', "https://davids-restaurant.herokuapp.com/")
-  .directive('foundItems', FoundItems)
-  .directive('listItemDescription', ListItemDescription);
+  .directive('foundItems', FoundItems);
 
   NarrowItDownController.$inject = ['MenuSearchService'];
   function NarrowItDownController(MenuSearchService) {
     var list = this;
 
     list.found = [];
-    //get the search term
-    list.searchTerm = "tofu";
+    list.searchTerm = "";
+    list.warning= "";
+
+    list.isListEmpty = function () {
+      if (list.found.length == 0 ) {
+        return true;
+      }
+      return false;
+    }
 
     list.foundItems = function() {
-
       //reset the list
       list.found = [];
-
       var foundItemsPromise = MenuSearchService.getMatchedMenuItems(list.searchTerm);
-
       foundItemsPromise.then(function (response) {
-
           var rawItems =response.data.menu_items;
+
+          //check if there is a search term
+          if (Object.keys(list.searchTerm).length == 0 ) {
+            list.warning = "Nothing found";
+            return;
+          } else {
+            list.warning="";
+          }
 
           angular.forEach(rawItems, function(item){
               if (item.description.includes(list.searchTerm)) {
@@ -38,7 +48,6 @@
               }
             });
             console.log("FoundItems: ", list.found);
-
         })
         .catch(function (errorResponse) {
           console.log('Error: ', errorResponse.message);
@@ -46,22 +55,14 @@
       }
   }
 
-function ListItemDescription() {
-  var ddo = {
-    template: '{{ item.description }}'
-  };
-
-  return ddo;
-}
-
-
   function FoundItems() {
     var ddo = {
       templateUrl: 'foundItems.html',
       scope: {
-        found: '=',
+        foundList: '=',
         onRemove: '&'
       },
+      transclude: true,
       controller: FoundItemsDirectiveController,
       controllerAs: 'items',
       bindToController: true
@@ -70,14 +71,14 @@ function ListItemDescription() {
     return ddo;
   }
 
-  function FoundItemsDirectiveController(MenuSearchService) {
+  function FoundItemsDirectiveController() {
     var items =this;
 
-    console.log("FoundItemsDirectiveController: ", items.found);
+    console.log("FoundItemsDirectiveController: ", items.foundList);
 
     items.onRemove = function(itemIndex) {
-    //  MenuSearchService.removeItem(itemIndex);
-      items.found.pop(itemIndex);
+      console.log("Removed item at ", itemIndex);
+      items.foundList.splice(itemIndex, 1);
     }
   }
 
@@ -87,6 +88,7 @@ function ListItemDescription() {
 
     service.getMatchedMenuItems = function (searchTerm) {
         console.log("In call: ", searchTerm);
+
         var response = $http(
           {
             method: 'GET',
@@ -94,11 +96,5 @@ function ListItemDescription() {
           });
           return response;
         };
-
-  //     service.removeItem = function (itemIndex) {
-  //       console.log("Removing: ", itemIndex);
-  // //          items.splice(itemIndex, 1);
-  //     };
-
     }
 })();

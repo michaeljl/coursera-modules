@@ -1,7 +1,10 @@
+<div>
+  <ol>
+    <li ng-repeat="item in items.foundList">
+      Menu item: {{ item.description }}
+      <button ng-click="items.foundList.splice($index, 1);">Don't want this one!</button>
+    </li>
+     <span class=”error”> {{ items.errorMessage }}</span>
+  </ol>
 
-<ul>
-  <li ng-repeat="item in list.found">
-      <span> {{ item.description }} </span>
-      <!-- <button ng-click="items.remove($index);">Remove Item</button> -->
-  </li>
-</ul>
+</div>
