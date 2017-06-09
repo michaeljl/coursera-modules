@@ -42,6 +42,8 @@
           angular.forEach(rawItems, function(item){
               if (item.description.includes(list.searchTerm)) {
                 var itemToInsert = {
+                  name: item.name,
+                  short: item.short_name,
                   description : item.description
                 }
                 list.found.push(itemToInsert);
@@ -49,6 +51,7 @@
             });
             console.log("FoundItems: ", list.found);
 
+            //ugly but running out of time
             if (list.found.length == 0) {
               list.warning = "Nothing found";
             } else {

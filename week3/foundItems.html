@@ -1,12 +1,12 @@
 <div >
   <br>
   <span class="listItemsTitle">These menu choices were found:</span>
-  <ol class="listItems">
+  <ul class="listItems">
     <li ng-repeat="item in items.foundList">
-       {{ item.description }}
+        <b>ID: {{ item.short }}</b>, {{ item.name }}, (<i>{{ item.description }} )</i> 
       <button ng-click="items.onRemove($index);">Don't want this one!</button>
     </li>
      <span class=”error”> {{ items.errorMessage }}</span>
-  </ol>
+  </ul>
 
 </div>
