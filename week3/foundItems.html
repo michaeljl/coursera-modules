@@ -1,8 +1,10 @@
-<div>
-  <ol>
+<div >
+  <br>
+  <span class="listItemsTitle">These menu choices were found:</span>
+  <ol class="listItems">
     <li ng-repeat="item in items.foundList">
-      Menu item: {{ item.description }}
-      <button ng-click="items.foundList.splice($index, 1);">Don't want this one!</button>
+       {{ item.description }}
+      <button ng-click="items.onRemove($index);">Don't want this one!</button>
     </li>
      <span class=”error”> {{ items.errorMessage }}</span>
   </ol>

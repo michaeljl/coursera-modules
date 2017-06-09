@@ -9,6 +9,16 @@ input[type="text"] {
   font-style: italic;
   color: red;
 }
+.listItems {
+  margin-top: 10px;
+  font-size: 10px;
+  color: black;
+}
+.listItemsTitle {
+  font-style: italic;
+  color:green;
+}
+
 .narrow-button {
   float: left;
   margin-left: 10px;

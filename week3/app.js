@@ -48,6 +48,13 @@
               }
             });
             console.log("FoundItems: ", list.found);
+
+            if (list.found.length == 0) {
+              list.warning = "Nothing found";
+            } else {
+              list.warning = "";
+            }
+
         })
         .catch(function (errorResponse) {
           console.log('Error: ', errorResponse.message);
